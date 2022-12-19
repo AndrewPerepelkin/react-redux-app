@@ -31,9 +31,15 @@ const App = () => {
   }
 
   return (
-    <>
+    <div style={{
+      margin: '0 auto',
+      width: '400px',
+      fontFamily: 'sans-serif'
+    }}>
       <h1>My Tasks</h1>
-      <ul>
+      <ul style={{
+        padding: 0
+      }}>
         {state.map(el => (
           <li style={{ listStyle: 'none' }} key={el.id}>
             <input
@@ -48,7 +54,7 @@ const App = () => {
               style={{
                 textDecoration: el.completed ? 'line-through' : 'none',
                 outline: 'none', border: 'none',
-                width: '50%',
+                width: '75%',
                 height: '20px',
                 marginBottom: '20px',
                 borderBottom: '1px solid black'
@@ -78,7 +84,7 @@ const App = () => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }
 
