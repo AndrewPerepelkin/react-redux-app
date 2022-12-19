@@ -8,3 +8,6 @@ export function taskTitleChanged(task, title) {
 export function taskDeleted(task) {
   return { type: actionsTypes.taskDeleted, payload: { ...task } }
 }
+export function taskAdded(task) {
+  return { type: actionsTypes.taskAdded, payload: {...task} }
+}
