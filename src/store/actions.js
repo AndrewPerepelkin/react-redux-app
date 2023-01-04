@@ -5,3 +5,6 @@ export function taskCompleted(task) {
 export function taskTitleChanged(task, title) {
   return { type: actionsTypes.taskUpdated, payload: { ...task, title } }
 }
+export function taskDeleted(task) {
+  return { type: actionsTypes.taskDeleted, payload: { ...task } }
+}
