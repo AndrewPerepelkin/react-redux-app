@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import * as actions from './store/actions';
-import { initiateStore } from './store/store';
+import * as actions from './store/tasks/actions';
+import configureStore from './store/store';
 import delIcon from './icons/icons8-close-50.png';
 
-const store = initiateStore();
+const store = configureStore();
 
 const App = () => {
   const [state, setState] = useState(store.getState());

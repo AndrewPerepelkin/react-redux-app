@@ -8,9 +8,7 @@ export function taskReducer(state, action) {
       return newArray;
     }    
     case actions.taskDeleted: {
-      const newArray = [...state];
-      const filteredArray = newArray.filter(el => el.id !== action.payload.id);
-      return filteredArray;
+      return state.filter(el => el.id !== action.payload.id);
     }
 
   
