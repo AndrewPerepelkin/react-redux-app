@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import * as actions from './store/tasks/actions';
+import {taskCompleted, taskContentChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
 import delIcon from './icons/icons8-close-50.png';
 
@@ -17,17 +17,17 @@ const App = () => {
 
   const completeTask = ({ target }) => {
     const task = getCurrentTask(target.id);
-    store.dispatch(actions.taskCompleted(task));
+    store.dispatch(taskCompleted(task));
   }
 
   const changeTaskTitle = ({target}) => {
     const task = getCurrentTask(target.id);
-    store.dispatch(actions.taskTitleChanged(task, target.value));
+    store.dispatch(taskContentChanged(task, target.value));
   }
 
   const deleteTask = ({target}) => {
     const task = getCurrentTask(target.id);
-    store.dispatch(actions.taskDeleted(task));
+    store.dispatch(taskDeleted(task));
   }
 
   return (
@@ -60,7 +60,7 @@ const App = () => {
                 borderBottom: '1px solid black'
               }}
               value={el.title}
-              placeholder='Enter task name...'
+              placeholder='Enter task content...'
               onChange={changeTaskTitle}
             />
             <button
