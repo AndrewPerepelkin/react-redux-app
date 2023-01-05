@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { Provider } from 'react-redux';
+import React, {useEffect} from 'react';
+import { Provider, useSelector } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import {completeTask, getTasks, taskTitleChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
@@ -8,11 +8,10 @@ import delIcon from './icons/icons8-close-50.png';
 const store = configureStore();
 
 const App = () => {
-  const [state, setState] = useState(store.getState());
+  const state = useSelector(state => state);
 
   useEffect(() => {
     store.dispatch(getTasks())
-    store.subscribe(() => setState(store.getState()));
   }, []);
 
   const getCurrentTask = (id) => state.find(el => el.id === +id)
