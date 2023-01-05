@@ -8,7 +8,9 @@ import delIcon from './icons/icons8-close-50.png';
 const store = configureStore();
 
 const App = () => {
-  const state = useSelector(state => state);
+  const state = useSelector(state => state.entities);
+  const isLoading = useSelector(state => state.isLoading);
+  const error = useSelector(state => state.error);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,9 +24,17 @@ const App = () => {
     dispatch(taskTitleChanged(task, target.value));
   }
 
-  const deleteTask = ({target}) => {
+  const deleteTask = ({ target }) => {
     const task = getCurrentTask(target.id);
     dispatch(taskDeleted(task));
+  };
+
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>{error}</p>
   }
 
   return (
