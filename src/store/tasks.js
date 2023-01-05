@@ -31,7 +31,7 @@ const tasksSlice = createSlice({
 const { actions, reducer: taskReducer } = tasksSlice;
 const { update, remove, received, taskRequested, taskRequestedFailed } = actions;
 
-export const getTasks = () => async (dispatch) => {
+export const loadTasks = () => async (dispatch) => {
   dispatch(taskRequested());
   try {
     const data = await todosService.fetch();
@@ -51,5 +51,8 @@ export function taskTitleChanged(task, title) {
 export function taskDeleted(task) {
   return remove({ ...task });
 }
+
+export const getTasks = () => (state) => state.tasks.entities;
+export const getTasksLoadingStatus = () => (state) => state.tasks.isLoading;
 
 export default taskReducer;

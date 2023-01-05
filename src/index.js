@@ -1,20 +1,21 @@
 import React, {useEffect} from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import ReactDOM from 'react-dom/client';
-import {completeTask, getTasks, taskTitleChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
+import {completeTask, getTasks, taskTitleChanged, taskDeleted, loadTasks, getTasksLoadingStatus} from './store/tasks';
+import { getError } from './store/errors';
 import delIcon from './icons/icons8-close-50.png';
 
 const store = configureStore();
 
 const App = () => {
-  const state = useSelector(state => state.tasks.entities);
-  const isLoading = useSelector(state => state.tasks.isLoading);
-  const error = useSelector(state => state.errors.entities[0]);
+  const state = useSelector(getTasks());
+  const isLoading = useSelector(getTasksLoadingStatus());
+  const error = useSelector(getError());
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTasks());
+    dispatch(loadTasks());
   }, []);
 
   const getCurrentTask = (id) => state.find(el => el.id === +id)
