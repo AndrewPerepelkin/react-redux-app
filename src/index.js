@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import {completeTask, getTasks, taskTitleChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
@@ -87,7 +88,9 @@ const App = () => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
+  <Provider store={store}>
     <App />
+  </Provider>
   // </React.StrictMode>
 );
 
