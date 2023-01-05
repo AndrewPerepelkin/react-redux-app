@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import {taskCompleted, taskContentChanged, taskDeleted} from './store/tasks';
+import {completeTask, taskContentChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
 import delIcon from './icons/icons8-close-50.png';
 
@@ -14,11 +14,6 @@ const App = () => {
   }, []);
 
   const getCurrentTask = (id) => state.find(el => el.id === +id)
-
-  const completeTask = ({ target }) => {
-    const task = getCurrentTask(target.id);
-    store.dispatch(taskCompleted(task));
-  }
 
   const changeTaskTitle = ({target}) => {
     const task = getCurrentTask(target.id);
@@ -44,7 +39,7 @@ const App = () => {
           <li style={{ listStyle: 'none' }} key={el.id}>
             <input
               id={el.id}
-              onChange={completeTask}
+              onChange={()=>store.dispatch(completeTask(el))}
               type="checkbox"
               checked={el.completed}
               />
