@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice } from '@reduxjs/toolkit';
 import todosService from '../services/todosService';
 
 const initialState = [];
@@ -7,7 +7,7 @@ const tasksSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
-    set(state, action) {
+    received(state, action) {
       return action.payload;
     },
     update(state, action) {
@@ -21,15 +21,19 @@ const tasksSlice = createSlice({
 });
 
 const { actions, reducer: taskReducer } = tasksSlice;
-const { update, remove, set } = actions;
+const { update, remove, received } = actions;
+
+const taskRequested = createAction('task/requested')
+const taskRequestedFailed = createAction('task/requestedFailed')
 
 export const getTasks = () => async (dispatch) => {
+  dispatch(taskRequested())
   try {
     const data = await todosService.fetch()
     console.log(data);
-    dispatch(set(data))
+    dispatch(received(data))
   } catch (error) {
-    console.log(error);
+    dispatch(taskRequestedFailed(error.message));
   }
 }
 
