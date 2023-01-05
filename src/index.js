@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import configureStore from './store/store';
-import {completeTask, getTasks, taskTitleChanged, taskDeleted, loadTasks, getTasksLoadingStatus} from './store/tasks';
+import {completeTask, getTasks, taskTitleChanged, taskDeleted, loadTasks, getTasksLoadingStatus, addTask} from './store/tasks';
 import { getError } from './store/errors';
 import delIcon from './icons/icons8-close-50.png';
 import addIcon from './icons/icons8-add-50.png';
@@ -30,10 +30,6 @@ const App = () => {
     const task = getCurrentTask(target.id);
     dispatch(taskDeleted(task));
   };
-
-  const addTask = () => { 
-    console.log('added task');
-   }
 
   if (isLoading) {
     return <p>Loading...</p>
@@ -101,7 +97,7 @@ const App = () => {
         ))}
       </ul>
       <button
-        onClick={addTask}
+        onClick={()=>dispatch(addTask())}
         style={{
           position: 'absolute',
           right: 0,
