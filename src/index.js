@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import {completeTask, getTasks, taskTitleChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
@@ -9,21 +9,22 @@ const store = configureStore();
 
 const App = () => {
   const state = useSelector(state => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    store.dispatch(getTasks())
+    dispatch(getTasks());
   }, []);
 
   const getCurrentTask = (id) => state.find(el => el.id === +id)
 
   const changeTaskTitle = ({target}) => {
     const task = getCurrentTask(target.id);
-    store.dispatch(taskTitleChanged(task, target.value));
+    dispatch(taskTitleChanged(task, target.value));
   }
 
   const deleteTask = ({target}) => {
     const task = getCurrentTask(target.id);
-    store.dispatch(taskDeleted(task));
+    dispatch(taskDeleted(task));
   }
 
   return (
@@ -40,7 +41,7 @@ const App = () => {
           <li style={{ listStyle: 'none' }} key={el.id}>
             <input
               id={el.id}
-              onChange={()=>store.dispatch(completeTask(el))}
+              onChange={()=>dispatch(completeTask(el))}
               type="checkbox"
               checked={el.completed}
               />
