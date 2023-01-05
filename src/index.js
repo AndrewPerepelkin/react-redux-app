@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import {completeTask, taskContentChanged, taskDeleted} from './store/tasks';
+import {completeTask, getTasks, taskTitleChanged, taskDeleted} from './store/tasks';
 import configureStore from './store/store';
 import delIcon from './icons/icons8-close-50.png';
 
@@ -10,6 +10,7 @@ const App = () => {
   const [state, setState] = useState(store.getState());
 
   useEffect(() => {
+    store.dispatch(getTasks())
     store.subscribe(() => setState(store.getState()));
   }, []);
 
@@ -17,7 +18,7 @@ const App = () => {
 
   const changeTaskTitle = ({target}) => {
     const task = getCurrentTask(target.id);
-    store.dispatch(taskContentChanged(task, target.value));
+    store.dispatch(taskTitleChanged(task, target.value));
   }
 
   const deleteTask = ({target}) => {

@@ -1,14 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import todosService from '../services/todosService';
 
-const initialState = [
-  { id: 1, content: "", completed: false },
-  { id: 2, content: "", completed: false }
-];
+const initialState = [];
 
 const tasksSlice = createSlice({
   name: 'task',
   initialState,
   reducers: {
+    set(state, action) {
+      return action.payload;
+    },
     update(state, action) {
       const elementIndex = state.findIndex(el => el.id === action.payload.id);
       state[elementIndex] = { ...action.payload };
@@ -20,13 +21,23 @@ const tasksSlice = createSlice({
 });
 
 const { actions, reducer: taskReducer } = tasksSlice;
-const { update, remove } = actions;
+const { update, remove, set } = actions;
+
+export const getTasks = () => async (dispatch) => {
+  try {
+    const data = await todosService.fetch()
+    console.log(data);
+    dispatch(set(data))
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export const completeTask = (task) => (dispatch, getState) => {
   dispatch(update({ ...task, completed: !task.completed }))
 }
-export function taskContentChanged(task, content) {
-  return update({ ...task, content });
+export function taskTitleChanged(task, title) {
+  return update({ ...task, title });
 }
 export function taskDeleted(task) {
   return remove({ ...task });
