@@ -2,9 +2,10 @@ import React, {useEffect} from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import configureStore from './store/store';
-import {completeTask, getTasks, taskTitleChanged, taskDeleted, loadTasks, getTasksLoadingStatus} from './store/tasks';
+import {completeTask, getTasks, taskTitleChanged, taskDeleted, loadTasks, getTasksLoadingStatus, addTask} from './store/tasks';
 import { getError } from './store/errors';
 import delIcon from './icons/icons8-close-50.png';
+import addIcon from './icons/icons8-add-50.png';
 
 const store = configureStore();
 
@@ -18,12 +19,12 @@ const App = () => {
     dispatch(loadTasks());
   }, []);
 
-  const getCurrentTask = (id) => state.find(el => el.id === +id)
+  const getCurrentTask = (id) => state.find(el => el.id === +id);
 
-  const changeTaskTitle = ({target}) => {
+  const changeTaskTitle = ({ target }) => {
     const task = getCurrentTask(target.id);
     dispatch(taskTitleChanged(task, target.value));
-  }
+  };
 
   const deleteTask = ({ target }) => {
     const task = getCurrentTask(target.id);
@@ -42,9 +43,12 @@ const App = () => {
     <div style={{
       margin: '0 auto',
       width: '400px',
-      fontFamily: 'sans-serif'
+      fontFamily: 'sans-serif',
+      position: 'relative'
     }}>
-      <h1>My Tasks</h1>
+      <h1 style={{
+        fontWeight: 'lighter'
+      }}>My Tasks</h1>
       <ul style={{
         padding: 0
       }}>
@@ -92,6 +96,25 @@ const App = () => {
           </li>
         ))}
       </ul>
+      <button
+        onClick={()=>dispatch(addTask())}
+        style={{
+          position: 'absolute',
+          right: 0,
+          width: '30px',
+          height: '30px',
+          cursor: 'pointer',
+          border: 'none',
+          backgroundColor: 'transparent',
+          margin: '0 53px 0 0',
+          padding: 0,
+          backgroundImage: `url(${addIcon})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >        
+      </button>
     </div>
   )
 }

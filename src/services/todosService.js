@@ -1,6 +1,6 @@
 import httpService from "./httpService";
 
-const todosEndpoint = 'todos/'
+const todosEndpoint = 'todos/';
 
 const todosService = {
   fetch: async () => {
@@ -10,6 +10,10 @@ const todosService = {
         _limit: 10
       }
     })
+    return data;
+  },
+  create: async (payload) => {
+    const { data } = await httpService.post(todosEndpoint, payload);
     return data;
   }
 }
